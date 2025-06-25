@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 AI Workflow Agent with Claude, LangGraph, and wxflows
 
-## Getting Started
+A powerful AI agent platform built using **Claude 3.5 Sonnet**, **LangGraph**, **LangChain**, and **wxflows**, designed for tool-augmented conversations, real-time streaming, and production-ready deployment.
 
-First, run the development server:
+---
+📸 Screenshots 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Features
+
+### 🔁 Prompt Caching (Anthropic)
+- Reduce token usage drastically using **Anthropic’s prompt caching feature**
+- Optimized for cost and speed across sessions
+- Seamless reuse of shared conversation context
+
+### 🧰 Tooling with wxflows
+- **Integrate any data source as a tool in seconds**
+  - YouTube transcript tools
+  - Google Books API integration
+- Drag-and-drop visual flow creation using **wxflows**
+
+### 🧠 LangGraph + LangChain Integration
+- **State Management** with `StateGraph`
+- **Tool Orchestration** with `ToolNode`
+- **Memory Handling** using `MemorySaver`
+- **Context Trimming** for efficient message windows
+
+### 💬 Advanced Chat Experience (Next.js 15)
+- Custom **real-time streaming** of Claude responses
+- **Tool execution feedback** inline in chat
+- Handles **tool errors** gracefully with user-friendly recovery
+
+### 💻 Modern Frontend Interface
+- Built with **Next.js 15**, **React**, **TailwindCSS**, and **Framer Motion**
+- Developer-style **terminal output blocks** for tool results
+- Chat history, real-time updates, and interactive UI elements
+
+### 🔐 Authentication & Persistence
+- Auth handled via **Clerk**
+- **Convex database** for:
+  - User profile management
+  - Persistent chat histories
+  - Real-time state sync
+
+### 🤖 Claude 3.5 Sonnet (Anthropic)
+- Robust reasoning with **tool-augmented responses**
+- Smart context handling (up to **4096 tokens**)
+- Fast, scalable, and precise generation capabilities
+
+### 🚢 Deployment
+- One-click **Vercel deployment**
+- `.env` based **secure environment config**
+- Optimized for **production performance**
+
+---
+
+## 🛠 Tech Stack
+
+| Layer         | Tech Used |
+|--------------|-----------|
+| AI Model     | Claude 3.5 Sonnet (Anthropic) |
+| Orchestration | LangGraph, LangChain |
+| Tooling      | wxflows |
+| Frontend     | Next.js 15, React, TailwindCSS, Framer Motion |
+| Backend      | Convex, Clerk |
+| Hosting      | Vercel |
+| Utilities    | Custom Streaming, Prompt Caching, Tool Feedback UI |
+
+---
+
+## 🧪 Getting Started
+
+Follow these steps to run the project locally:
+
+### 1. Clone the repository
+
+```
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set up environment variables
 
-## Learn More
+Create a `.env.local` file in the root directory and add the following:
 
-To learn more about Next.js, take a look at the following resources:
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+CONVEX_DEPLOYMENT=your_convex_deployment
+NEXT_PUBLIC_CONVEX_URL=your_convex_url
+ANTHROPIC_API_KEY=your_claude_api_key
+WXFLOWS_APIKEY=your_wxflows_apikey
+WXFLOWS_ENDPOINT=your_wxflows_endpoint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> 🔐 **Do not commit your `.env.local` file. It contains sensitive credentials.**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Run the development server
 
-## Deploy on Vercel
+```
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Visit the app at: [http://localhost:3000](http://localhost:3000)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+### 📄 License
+This project is licensed under the MIT License
+
