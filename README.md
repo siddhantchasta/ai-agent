@@ -3,7 +3,13 @@
 A powerful AI agent platform built using **Claude 3.5 Sonnet**, **LangGraph**, **LangChain**, and **wxflows**, designed for tool-augmented conversations, real-time streaming, and production-ready deployment.
 
 ---
+
 📸 Screenshots 
+<div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+  <img src="https://github.com/user-attachments/assets/1917852f-83c3-4bb8-9fc7-79607eb10344" alt="Screenshot 1" style="width: 30%; max-width: 100%; height: auto;" />
+  <img src="https://github.com/user-attachments/assets/c592c1bf-0ffc-4f84-9d20-789401c3e2ed" alt="Screenshot 2" style="width: 30%; max-width: 100%; height: auto;" />
+  <img src="https://github.com/user-attachments/assets/a1feacf7-1eac-4e15-81d4-a9052ec67c83" alt="Screenshot 3" style="width: 30%; max-width: 100%; height: auto;" />
+</div>
 
 ---
 
