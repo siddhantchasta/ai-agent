@@ -1,4 +1,11 @@
 # 🧠 AI Workflow Agent with Claude, LangGraph, and wxflows
+[![Claude 3.5 Sonnet](https://img.shields.io/badge/Model-Claude%203.5%20Sonnet-purple?style=flat-square&logo=anthropic)](https://www.anthropic.com/)
+[![LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-blue?style=flat-square&logo=data:image/png;base64,YOUR_BASE64_ICON)]()
+[![LangChain](https://img.shields.io/badge/Orchestration-LangChain-yellow?style=flat-square&logo=langchain)](https://langchain.com/)
+[![wxflows](https://img.shields.io/badge/Tooling-wxflows-black?style=flat-square&logo=generic)](https://wxflows.ai/)
+[![Next.js](https://img.shields.io/badge/Frontend-Next.js-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/Language-TypeScript-3078C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/)
 
 A powerful AI agent platform built using **Claude 3.5 Sonnet**, **LangGraph**, **LangChain**, and **wxflows**, designed for tool-augmented conversations, real-time streaming, and production-ready deployment.
 
