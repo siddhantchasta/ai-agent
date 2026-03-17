@@ -44,7 +44,7 @@ import {
   // Connect to the LLM provider with better tool instructions
   const initialiseModel = () => {
     const model = new ChatAnthropic({
-      modelName: "claude-3-5-sonnet-20241022",
+      modelName: "claude-sonnet-4-20250514",
       anthropicApiKey: process.env.ANTHROPIC_API_KEY,
       temperature: 0.7,
       maxTokens: 4096,
