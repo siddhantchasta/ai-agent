@@ -42,7 +42,7 @@ import {
   const toolNode = new ToolNode(tools);
   
 
-  
+
   // Connect to the LLM provider with better tool instructions
   const initialiseModel = () => {
     const model = new ChatAnthropic({
@@ -85,6 +85,7 @@ import {
     return model;
   };
 
+  
   function shouldContinue(state: typeof MessagesAnnotation.State) {
     const messages = state.messages;
     const lastMessage = messages[messages.length - 1] as AIMessage;
