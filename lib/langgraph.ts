@@ -41,6 +41,8 @@ import {
   const tools = await toolClient.lcTools;
   const toolNode = new ToolNode(tools);
   
+
+  
   // Connect to the LLM provider with better tool instructions
   const initialiseModel = () => {
     const model = new ChatAnthropic({
