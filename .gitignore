@@ -42,6 +42,12 @@ next-env.d.ts
 
 #docs
 docs/*
+scripts/*
+sessions/*
+CLAUDE.md
+CODEBASE_MAP.md
+PROJECT_MEMORY.md
+agents/*
 
 #wxflows 
 wxflows/config.yaml
