@@ -19,6 +19,8 @@ import {
     ChatPromptTemplate,
     MessagesPlaceholder,
   } from "@langchain/core/prompts";
+
+  import { youtubeTranscriptTool } from "@/tools/youtubeTranscriptTool";
   import SYSTEM_MESSAGE from "@/constants/systemMessage";
   
   // Trim the messages to manage conversation history
@@ -28,7 +30,7 @@ import {
     tokenCounter: (msgs) => msgs.length,
     includeSystem: true,
     allowPartial: false,
-    startOn: "human",
+    // startOn: "human",
   });
   
   // Connect to wxflows
@@ -38,7 +40,8 @@ import {
   });
   
   // Retrieve the tools
-  const tools = await toolClient.lcTools;
+  const wxflowsTools = await toolClient.lcTools;
+  const tools = [...wxflowsTools, youtubeTranscriptTool];
   const toolNode = new ToolNode(tools);
   
 
@@ -48,9 +51,13 @@ import {
     const model = new ChatAnthropic({
       modelName: "claude-sonnet-5",
       anthropicApiKey: process.env.ANTHROPIC_API_KEY,
-      temperature: 0.7,
       maxTokens: 4096,
       streaming: true,
+       invocationKwargs: {
+        temperature: undefined,
+        top_p: undefined,
+      },
+
       clientOptions: {
         defaultHeaders: {
           "anthropic-beta": "prompt-caching-2024-07-31",

@@ -31,22 +31,32 @@ type Query {
   "Find books by search string. For example to search for Daniel Keyes 'Flowers for Algernon' use q: \"flowers+inauthor:keyes\""
   books(q: String, maxResults: Int! = 5): [BookResult]
     @rest(
-      endpoint: "https://www.googleapis.com/books/v1/volumes?langRestrict=en"
+      endpoint: "https://www.googleapis.com/books/v1/volumes?langRestrict=en&key={{.Get \"apikey\"}}"
+      configuration: "google_books_config"
       ecmascript: """
       function transformREST(s) {
-         let body = JSON.parse(s)
+         let body = JSON.parse(s);
+         
+         // 1. Fallback if 'items' is missing entirely (e.g. no results found)
+         let items = body.items || [];
 
-          return(JSON.stringify(
-            body.items.map((item) => ({
-              volumeId: item.id,
-              title: item.volumeInfo.title,
-              authors: item.volumeInfo.authors
-            }))
-          ))
+          return JSON.stringify(
+            items.map((item) => {
+              // 2. Safely access volumeInfo
+              let info = item.volumeInfo || {};
+              
+              return {
+                volumeId: item.id,
+                title: info.title || "Unknown Title",
+                // 3. Fallback if 'authors' is missing for a specific book
+                authors: info.authors || []
+              };
+            })
+          );
       }
       """
-      
     )
+    
   book(volumeId: String): VolumeInfo
     @rest(
       endpoint: "https://www.googleapis.com/books/v1/volumes/$volumeId"
