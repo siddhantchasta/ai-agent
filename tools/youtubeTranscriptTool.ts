@@ -20,11 +20,12 @@ export const youtubeTranscriptTool = new DynamicStructuredTool({
         .join(" ");
       
       // Limit to ~4000 characters just in case it's a 3 hour podcast, 
-      // so we don't blow up the LLM context window. You can adjust this.
+      // so we don't blow up the LLM context window.
       return fullText.slice(0, 8000); 
-    } catch (error: any) {
-      console.error("Error fetching transcript:", error.message);
-      return `Failed to fetch transcript. Error: ${error.message}. Ensure the video has public captions available.`;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      console.error("Error fetching transcript:", message);
+      return `Failed to fetch transcript. Error: ${message}. Ensure the video has public captions available.`;
     }
   },
 });
