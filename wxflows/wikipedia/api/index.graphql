@@ -4,6 +4,7 @@ type Query {
   ): JSON 
     @rest(
       endpoint: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&formatversion=2&srsearch=$q"
+      headers: [{ name: "User-Agent", value: "ai-agent/1.0 (siddhantchasta4199@gmail.com)" }]
       resultroot: "query.search[]"
     )
   page(
@@ -11,6 +12,7 @@ type Query {
   ): JSON 
     @rest(
       endpoint: "https://en.wikipedia.org/w/api.php?action=parse&format=json&pageid=$pageId&formatversion=2"
+      headers: [{ name: "User-Agent", value: "ai-agent/1.0 (siddhantchasta4199@gmail.com)" }]
       resultroot: "parse.text"
     )
 }
