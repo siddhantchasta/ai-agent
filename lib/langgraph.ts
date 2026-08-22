@@ -93,10 +93,25 @@ import {
   };
 
   
+  const MAX_TOOL_STEPS = 3;
+
   function shouldContinue(state: typeof MessagesAnnotation.State) {
     const messages = state.messages;
     const lastMessage = messages[messages.length - 1] as AIMessage;
   
+    // Count tool executions in the current graph run
+    const toolExecutions = messages.filter(
+      (msg) => msg._getType() === "tool" || (msg as AIMessage).tool_calls?.length
+    ).length;
+
+    // Hard Guardrail: halt tool recursion if step budget is exhausted
+    if (toolExecutions >= MAX_TOOL_STEPS * 2) {
+      console.warn(
+        "⚠️ [Guardrail] Maximum tool execution step budget reached. Halting tool loop."
+      );
+      return END;
+    }
+
     if (lastMessage.tool_calls?.length) {
       return "tools";
     }
@@ -182,6 +197,7 @@ import {
         configurable: { thread_id: chatId },
         streamMode: "messages",
         runId: chatId,
+        recursionLimit: 8, // Hard engine limit to prevent runaway loops
       }
     );
     return stream;
