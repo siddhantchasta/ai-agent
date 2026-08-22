@@ -1,5 +1,5 @@
 # 🧠 AI Workflow Agent with Claude, LangGraph, and wxflows
-[![Claude 3.5 Sonnet](https://img.shields.io/badge/Model-Claude%203.5%20Sonnet-purple?style=flat-square&logo=anthropic)](https://www.anthropic.com/)
+[![Claude Sonnet 5](https://img.shields.io/badge/Model-Claude%20Sonnet%205-purple?style=flat-square&logo=anthropic)](https://www.anthropic.com/)
 [![LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-blue?style=flat-square&logo=data:image/png;base64,YOUR_BASE64_ICON)]()
 [![LangChain](https://img.shields.io/badge/Orchestration-LangChain-yellow?style=flat-square&logo=langchain)](https://langchain.com/)
 [![wxflows](https://img.shields.io/badge/Tooling-wxflows-black?style=flat-square&logo=generic)](https://wxflows.ai/)
@@ -7,7 +7,7 @@
 [![TypeScript](https://img.shields.io/badge/Language-TypeScript-3078C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/)
 
-A powerful AI agent platform built using **Claude 3.5 Sonnet**, **LangGraph**, **LangChain**, and **wxflows**, designed for tool-augmented conversations, real-time streaming, and production-ready deployment.
+A powerful AI agent platform built using **Claude Sonnet 5**, **LangGraph**, **LangChain**, and **wxflows**, designed for tool-augmented conversations, real-time streaming, and production-ready deployment.
 
 ---
 
@@ -27,11 +27,12 @@ A powerful AI agent platform built using **Claude 3.5 Sonnet**, **LangGraph**, *
 - Optimized for cost and speed across sessions
 - Seamless reuse of shared conversation context
 
-### 🧰 Tooling with wxflows
-- **Integrate any data source as a tool in seconds**
-  - YouTube transcript tools
-  - Google Books API integration
-- Drag-and-drop visual flow creation using **wxflows**
+### 🧰 Tooling with wxflows & LangChain
+- **Integrate APIs and custom tools seamlessly**
+  - Native YouTube transcript tool powered by `youtube-transcript`
+  - Google Books API and Wikipedia integrations via **wxflows**
+  - Comments / REST API data endpoints
+- Visual flow creation and GraphQL tooling with **wxflows**
 
 ### 🧠 LangGraph + LangChain Integration
 - **State Management** with `StateGraph`
@@ -56,7 +57,7 @@ A powerful AI agent platform built using **Claude 3.5 Sonnet**, **LangGraph**, *
   - Persistent chat histories
   - Real-time state sync
 
-### 🤖 Claude 3.5 Sonnet (Anthropic)
+### 🤖 Claude Sonnet 5 (Anthropic)
 - Robust reasoning with **tool-augmented responses**
 - Smart context handling (up to **4096 tokens**)
 - Fast, scalable, and precise generation capabilities
@@ -72,9 +73,9 @@ A powerful AI agent platform built using **Claude 3.5 Sonnet**, **LangGraph**, *
 
 | Layer         | Tech Used |
 |--------------|-----------|
-| AI Model     | Claude 3.5 Sonnet (Anthropic) |
+| AI Model     | Claude Sonnet 5 (Anthropic) |
 | Orchestration | LangGraph, LangChain |
-| Tooling      | wxflows |
+| Tooling      | wxflows, LangChain Custom Tools |
 | Frontend     | Next.js 15, React, TailwindCSS, Framer Motion |
 | Backend      | Convex, Clerk |
 | Hosting      | Vercel |
