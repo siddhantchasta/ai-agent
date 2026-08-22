@@ -8,7 +8,7 @@ import WelcomeMessage from "@/components/WelcomeMessage";
 import { createSSEParser } from "@/lib/createSSEParser";
 import { MessageBubble } from "@/components/MessageBubble";
 import { ArrowRight } from "lucide-react";
-import { getConvexClient } from "@/lib/convex";
+import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 interface ChatInterfaceProps {
@@ -20,9 +20,12 @@ export default function ChatInterface({
   chatId,
   initialMessages,
 }: ChatInterfaceProps) {
-  const [messages, setMessages] = useState<Doc<"messages">[]>(initialMessages);
+  const liveMessages = useQuery(api.messages.list, { chatId });
+  const messages = liveMessages ?? initialMessages;
+
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [optimisticUserMessage, setOptimisticUserMessage] = useState<string | null>(null);
   const [streamedResponse, setStreamedResponse] = useState("");
   const [currentTool, setCurrentTool] = useState<{
     name: string;
@@ -32,7 +35,7 @@ export default function ChatInterface({
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, streamedResponse]);
+  }, [messages, streamedResponse, optimisticUserMessage]);
 
   const formatToolOutput = (output: unknown): string => {
     if (typeof output === "string") return output;
@@ -88,17 +91,8 @@ export default function ChatInterface({
     setInput("");
     setStreamedResponse("");
     setCurrentTool(null);
+    setOptimisticUserMessage(trimmedInput);
     setIsLoading(true);
-
-    const optimisticUserMessage: Doc<"messages"> = {
-      _id: `temp_${Date.now()}`,
-      chatId,
-      content: trimmedInput,
-      role: "user",
-      createdAt: Date.now(),
-    } as Doc<"messages">;
-
-    setMessages((prev) => [...prev, optimisticUserMessage]);
 
     let fullResponse = "";
 
@@ -125,9 +119,9 @@ export default function ChatInterface({
       const reader = response.body.getReader();
 
       await processStream(reader, async (chunk) => {
-        const messages = parser.parse(chunk);
+        const parsedMessages = parser.parse(chunk);
 
-        for (const message of messages) {
+        for (const message of parsedMessages) {
           switch (message.type) {
             case StreamMessageType.Token:
               if ("token" in message) {
@@ -177,32 +171,17 @@ export default function ChatInterface({
               break;
 
             case StreamMessageType.Done:
-              const assistantMessage: Doc<"messages"> = {
-                _id: `temp_assistant_${Date.now()}`,
-                chatId,
-                content: fullResponse,
-                role: "assistant",
-                createdAt: Date.now(),
-              } as Doc<"messages">;
-
-              const convex = getConvexClient();
-              await convex.mutation(api.messages.store, {
-                chatId,
-                content: fullResponse,
-                role: "assistant",
-              });
-
-              setMessages((prev) => [...prev, assistantMessage]);
+              // Assistant message has already been persisted to Convex on the server!
+              // Convex useQuery subscription will automatically sync and render it.
               setStreamedResponse("");
+              setOptimisticUserMessage(null);
               return;
           }
         }
       });
     } catch (error) {
       console.error("Error sending message:", error);
-      setMessages((prev) =>
-        prev.filter((msg) => msg._id !== optimisticUserMessage._id)
-      );
+      setOptimisticUserMessage(null);
       setStreamedResponse(
         formatTerminalOutput(
           "error",
@@ -215,11 +194,15 @@ export default function ChatInterface({
     }
   };
 
+  const isOptimisticPending =
+    optimisticUserMessage !== null &&
+    !messages.some((m) => m.role === "user" && m.content === optimisticUserMessage);
+
   return (
     <main className="flex flex-col h-[calc(100vh-theme(spacing.14))]">
       <section className="flex-1 overflow-y-auto bg-gray-50 p-2 md:p-0">
         <div className="max-w-4xl mx-auto p-4 space-y-3">
-          {messages?.length === 0 && <WelcomeMessage />}
+          {messages?.length === 0 && !isOptimisticPending && <WelcomeMessage />}
 
           {messages?.map((message: Doc<"messages">) => (
             <MessageBubble
@@ -228,6 +211,10 @@ export default function ChatInterface({
               isUser={message.role === "user"}
             />
           ))}
+
+          {isOptimisticPending && (
+            <MessageBubble content={optimisticUserMessage} isUser={true} />
+          )}
 
           {streamedResponse && <MessageBubble content={streamedResponse} />}
 
